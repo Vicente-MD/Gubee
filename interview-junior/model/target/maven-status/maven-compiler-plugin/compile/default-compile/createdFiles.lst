@@ -1,0 +1,7 @@
+br/com/gubee/interview/model/PowerStats.class
+br/com/gubee/interview/model/enums/Race.class
+br/com/gubee/interview/model/PowerStats$PowerStatsBuilder.class
+br/com/gubee/interview/model/Hero$HeroBuilder.class
+br/com/gubee/interview/model/request/CreateHeroRequest$CreateHeroRequestBuilder.class
+br/com/gubee/interview/model/request/CreateHeroRequest.class
+br/com/gubee/interview/model/Hero.class

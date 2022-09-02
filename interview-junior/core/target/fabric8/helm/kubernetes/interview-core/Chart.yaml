@@ -1,0 +1,11 @@
+---
+name: "interview-core"
+home: "https://spring.io/projects/spring-boot/interview/interview-core"
+sources:
+- "https://github.com/spring-projects/spring-boot/interview/interview-core"
+version: "1.0.0-SNAPSHOT"
+description: "Junior interview project."
+maintainers:
+- name: "Pivotal"
+  email: "info@pivotal.io"
+icon: "img/icons/spring-boot.svg"

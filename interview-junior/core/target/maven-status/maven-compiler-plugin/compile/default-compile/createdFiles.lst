@@ -1,0 +1,9 @@
+br/com/gubee/interview/core/exception/ExceptionAdvice.class
+br/com/gubee/interview/core/features/powerstats/PowerStatsRepository.class
+br/com/gubee/interview/core/features/hero/HeroService.class
+br/com/gubee/interview/core/features/hero/HeroController.class
+br/com/gubee/interview/core/Application.class
+br/com/gubee/interview/core/configuration/JdbcConfiguration.class
+br/com/gubee/interview/core/features/hero/HeroRepository.class
+br/com/gubee/interview/core/configuration/WebConfiguration.class
+br/com/gubee/interview/core/features/powerstats/PowerStatsService.class

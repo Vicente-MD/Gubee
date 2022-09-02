@@ -1,0 +1,9 @@
+/home/renato/work/entrevistas/teste-pratico/interview-junior/core/src/main/java/br/com/gubee/interview/core/features/hero/HeroRepository.java
+/home/renato/work/entrevistas/teste-pratico/interview-junior/core/src/main/java/br/com/gubee/interview/core/Application.java
+/home/renato/work/entrevistas/teste-pratico/interview-junior/core/src/main/java/br/com/gubee/interview/core/features/hero/HeroController.java
+/home/renato/work/entrevistas/teste-pratico/interview-junior/core/src/main/java/br/com/gubee/interview/core/features/powerstats/PowerStatsRepository.java
+/home/renato/work/entrevistas/teste-pratico/interview-junior/core/src/main/java/br/com/gubee/interview/core/exception/ExceptionAdvice.java
+/home/renato/work/entrevistas/teste-pratico/interview-junior/core/src/main/java/br/com/gubee/interview/core/configuration/JdbcConfiguration.java
+/home/renato/work/entrevistas/teste-pratico/interview-junior/core/src/main/java/br/com/gubee/interview/core/configuration/WebConfiguration.java
+/home/renato/work/entrevistas/teste-pratico/interview-junior/core/src/main/java/br/com/gubee/interview/core/features/hero/HeroService.java
+/home/renato/work/entrevistas/teste-pratico/interview-junior/core/src/main/java/br/com/gubee/interview/core/features/powerstats/PowerStatsService.java
