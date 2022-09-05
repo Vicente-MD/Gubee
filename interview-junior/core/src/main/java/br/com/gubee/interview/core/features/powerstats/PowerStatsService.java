@@ -1,5 +1,6 @@
 package br.com.gubee.interview.core.features.powerstats;
 
+import br.com.gubee.interview.core.exception.NotFoundException;
 import br.com.gubee.interview.model.PowerStats;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,12 @@ public class PowerStatsService {
     }
 
     public PowerStats findStatById(UUID uuid) {
-        PowerStats stats = powerStatsRepository.findById(uuid);
+        PowerStats stats = powerStatsRepository.findById(uuid).orElseThrow(() -> new NotFoundException());
         return stats;
     }
 
     public void updateStats(UUID uuid, PowerStats stats) {
-        findStatById(uuid);
-        powerStatsRepository.updateStats(stats, uuid);
+        powerStatsRepository.findById(uuid).orElseThrow(() -> new NotFoundException());
+        powerStatsRepository.updateStats(uuid, stats);
     }
-
 }

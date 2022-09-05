@@ -1,12 +1,10 @@
 package br.com.gubee.interview.core.features.hero;
 
-import br.com.gubee.interview.core.features.powerstats.PowerStatsService;
 import br.com.gubee.interview.model.Hero;
-import br.com.gubee.interview.model.PowerStats;
 import br.com.gubee.interview.model.enums.Race;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -14,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -35,9 +34,6 @@ public class HeroRepository {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @Autowired
-    final PowerStatsService powerStatsService;
-
     public UUID create(Hero hero) {
         final Map<String, Object> params = Map.of("name", hero.getName(),
                 "race", hero.getRace().name(),
@@ -48,18 +44,22 @@ public class HeroRepository {
                 UUID.class);
     }
 
-    public Hero findHeroById(UUID uuid) {
-        SqlParameterSource params = new MapSqlParameterSource("id", uuid);
-        Hero hero = namedParameterJdbcTemplate.queryForObject(
-                FIND_HERO_BY_ID_QUERY,
-                params,
-                (rs, rows) -> Hero.builder()
-                        .id(UUID.fromString(rs.getString("id")))
-                        .name(rs.getString("name"))
-                        .race(Race.valueOf(rs.getString("race")))
-                        .powerStatsId(UUID.fromString(rs.getString("power_stats_id")))
-                        .build());
-        return hero;
+    public Optional<Hero> findHeroById(UUID uuid) {
+        try {
+            SqlParameterSource params = new MapSqlParameterSource("id", uuid);
+            Hero hero = namedParameterJdbcTemplate.queryForObject(
+                    FIND_HERO_BY_ID_QUERY,
+                    params,
+                    (rs, rows) -> Hero.builder()
+                            .id(UUID.fromString(rs.getString("id")))
+                            .name(rs.getString("name"))
+                            .race(Race.valueOf(rs.getString("race")))
+                            .powerStatsId(UUID.fromString(rs.getString("power_stats_id")))
+                            .build());
+            return Optional.of(hero);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     public List<Hero> findAllHeroes() {
@@ -76,38 +76,33 @@ public class HeroRepository {
         return result;
     }
 
-    public Hero findHeroByName(String name) {
-        SqlParameterSource params = new MapSqlParameterSource("name", name);
-        Hero hero = namedParameterJdbcTemplate.queryForObject(
-                FIND_HERO_BY_NAME,
-                params,
-                (rs, rows) -> Hero.builder()
-                        .id(UUID.fromString(rs.getString("id")))
-                        .name(rs.getString("name"))
-                        .race(Race.valueOf(rs.getString("race")))
-                        .powerStatsId(UUID.fromString(rs.getString("power_stats_id")))
-                        .build());
-        return hero;
-
+    public Optional<Hero> findHeroByName(String name) {
+        try {
+            SqlParameterSource params = new MapSqlParameterSource("name", name);
+            Hero hero = namedParameterJdbcTemplate.queryForObject(
+                    FIND_HERO_BY_NAME,
+                    params,
+                    (rs, rows) -> Hero.builder()
+                            .id(UUID.fromString(rs.getString("id")))
+                            .name(rs.getString("name"))
+                            .race(Race.valueOf(rs.getString("race")))
+                            .powerStatsId(UUID.fromString(rs.getString("power_stats_id")))
+                            .build());
+            return Optional.of(hero);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
-    public void deleteHeroById(UUID uuid){
+    public void deleteHeroById(UUID uuid) {
         SqlParameterSource params = new MapSqlParameterSource("id", uuid);
         namedParameterJdbcTemplate.update(DELETE_HERO, params);
     }
 
-    public void updateHero(CreateHeroRequest hero, UUID uuid){
+    public void updateHero(CreateHeroRequest hero, UUID uuid) {
         SqlParameterSource params = new MapSqlParameterSource("name", hero.getName())
                 .addValue("race", hero.getRace().name())
                 .addValue("id", uuid);
-
-        powerStatsService.updateStats(
-                findHeroById(uuid).getPowerStatsId(),
-                new PowerStats(
-                        hero.getStrength(),
-                        hero.getAgility(),
-                        hero.getDexterity(),
-                        hero.getIntelligence()));
         namedParameterJdbcTemplate.update(UPDATE_HERO, params);
     }
 }

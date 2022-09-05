@@ -29,14 +29,12 @@ public class PowerStatsController {
 
     @GetMapping("getAll")
     public List<PowerStats> getAllStats() {
-        List<PowerStats> stats = powerStatsService.findAllStats();
-        return stats;
+        return powerStatsService.findAllStats();
     }
 
     @GetMapping("id/{id}")
     public ResponseEntity<?> getStatById(@PathVariable("id") UUID id) {
-        PowerStats stats = powerStatsService.findStatById(id);
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(powerStatsService.findStatById(id));
     }
 
     @PutMapping("update/{id}")

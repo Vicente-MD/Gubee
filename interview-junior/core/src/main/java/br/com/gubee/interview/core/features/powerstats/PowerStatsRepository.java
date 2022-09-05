@@ -1,8 +1,8 @@
 package br.com.gubee.interview.core.features.powerstats;
 
 import br.com.gubee.interview.model.PowerStats;
-import br.com.gubee.interview.model.request.CreateHeroRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -37,22 +38,7 @@ public class PowerStatsRepository {
 
     public List<PowerStats> findAll() {
         List<PowerStats> result = namedParameterJdbcTemplate.query(
-                        FIND_ALL_STATS,
-                        (rs, rowNum) -> PowerStats.builder()
-                                .id(UUID.fromString(rs.getString("id")))
-                                .strength(rs.getInt("strength"))
-                                .agility(rs.getInt("agility"))
-                                .dexterity(rs.getInt("dexterity"))
-                                .intelligence(rs.getInt("intelligence"))
-                                .build());
-        return result;
-    }
-
-    public PowerStats findById(UUID uuid) {
-        SqlParameterSource params = new MapSqlParameterSource("id", uuid);
-        PowerStats result = namedParameterJdbcTemplate.queryForObject(
-                FIND_STAT_BY_ID,
-                params,
+                FIND_ALL_STATS,
                 (rs, rowNum) -> PowerStats.builder()
                         .id(UUID.fromString(rs.getString("id")))
                         .strength(rs.getInt("strength"))
@@ -63,8 +49,26 @@ public class PowerStatsRepository {
         return result;
     }
 
-    public void updateStats(PowerStats stats, UUID uuid){
-        System.out.println(stats);
+    public Optional<PowerStats> findById(UUID uuid) {
+        try {
+            SqlParameterSource params = new MapSqlParameterSource("id", uuid);
+            PowerStats result = namedParameterJdbcTemplate.queryForObject(
+                    FIND_STAT_BY_ID,
+                    params,
+                    (rs, rowNum) -> PowerStats.builder()
+                            .id(UUID.fromString(rs.getString("id")))
+                            .strength(rs.getInt("strength"))
+                            .agility(rs.getInt("agility"))
+                            .dexterity(rs.getInt("dexterity"))
+                            .intelligence(rs.getInt("intelligence"))
+                            .build());
+            return Optional.of(result);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    public void updateStats(UUID uuid, PowerStats stats) {
         SqlParameterSource params = new MapSqlParameterSource("strength", stats.getStrength())
                 .addValue("agility", stats.getAgility())
                 .addValue("dexterity", stats.getDexterity())
