@@ -1,0 +1,10 @@
+Female,170
+Male,172
+Female,161
+Female,171
+Male,186
+Female,160
+Female,169
+Male,192
+Female,173
+Female,155

@@ -1,0 +1,2 @@
+Criar um programa que calcule a média de salários de uma empresa, devolvendo a média salarial.
+Os dados dos funcionários devem ser lidos em um arquivo csv contendo nome, email e salário do funcionário.
