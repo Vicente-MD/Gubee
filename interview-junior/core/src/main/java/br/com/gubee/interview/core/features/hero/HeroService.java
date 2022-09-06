@@ -32,7 +32,7 @@ public class HeroService {
 
     @Transactional
     public Hero findHeroById(UUID id) {
-        Hero result = heroRepository.findHeroById(id).orElseThrow(() -> new NotFoundException());
+        Hero result = heroRepository.findHeroById(id).orElseThrow(() -> new NotFoundException("Hero not found."));
         return result;
     }
 
@@ -50,13 +50,13 @@ public class HeroService {
 
     @Transactional
     public void deleteHeroById(UUID id) {
-        heroRepository.findHeroById(id).orElseThrow(() -> new NotFoundException());
+        heroRepository.findHeroById(id).orElseThrow(() -> new NotFoundException("Hero not found."));
         heroRepository.deleteHeroById(id);
     }
 
     @Transactional
     public void updateHero(CreateHeroRequest heroRequest, UUID uuid) {
-        Hero hero = heroRepository.findHeroById(uuid).orElseThrow(() -> new NotFoundException());
+        Hero hero = heroRepository.findHeroById(uuid).orElseThrow(() -> new NotFoundException("Hero not found."));
         heroRepository.updateHero(heroRequest, uuid);
         powerStatsRepository.updateStats(
                 hero.getPowerStatsId(),
@@ -68,11 +68,11 @@ public class HeroService {
     }
 
     public HeroComparison compareHeroes(UUID id1, UUID id2) {
-        Hero hero1 = heroRepository.findHeroById(id1).orElseThrow(() -> new NotFoundException());
-        Hero hero2 = heroRepository.findHeroById(id2).orElseThrow(() -> new NotFoundException());
+        Hero hero1 = heroRepository.findHeroById(id1).orElseThrow(() -> new NotFoundException("Hero not found."));
+        Hero hero2 = heroRepository.findHeroById(id2).orElseThrow(() -> new NotFoundException("Hero not found."));
 
-        PowerStats statsHero1 = powerStatsRepository.findById(hero1.getPowerStatsId()).orElseThrow(() -> new NotFoundException());
-        PowerStats statsHero2 = powerStatsRepository.findById(hero2.getPowerStatsId()).orElseThrow(() -> new NotFoundException());
+        PowerStats statsHero1 = powerStatsRepository.findById(hero1.getPowerStatsId()).orElseThrow(() -> new NotFoundException("Power Statistics not found."));
+        PowerStats statsHero2 = powerStatsRepository.findById(hero2.getPowerStatsId()).orElseThrow(() -> new NotFoundException("Power Statistics not found."));
 
         int strengthDifference = statsHero1.getStrength() - statsHero2.getStrength();
         int agilityDifference = statsHero1.getAgility() - statsHero2.getAgility();

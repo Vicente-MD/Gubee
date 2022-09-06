@@ -95,6 +95,6 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(value = {NotFoundException.class})
     ResponseEntity<Object> handleNotFoundException(NotFoundException e){
-        return status(NOT_FOUND).body("Not Found");
+        return status(NOT_FOUND).body(e.getMessage());
     }
 }

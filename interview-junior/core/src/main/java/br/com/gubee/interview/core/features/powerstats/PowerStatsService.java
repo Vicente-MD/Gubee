@@ -25,12 +25,12 @@ public class PowerStatsService {
     }
 
     public PowerStats findStatById(UUID uuid) {
-        PowerStats stats = powerStatsRepository.findById(uuid).orElseThrow(() -> new NotFoundException());
+        PowerStats stats = powerStatsRepository.findById(uuid).orElseThrow(() -> new NotFoundException("Power Statistics not found."));
         return stats;
     }
 
     public void updateStats(UUID uuid, PowerStats stats) {
-        powerStatsRepository.findById(uuid).orElseThrow(() -> new NotFoundException());
+        powerStatsRepository.findById(uuid).orElseThrow(() -> new NotFoundException("Power Statistics not found."));
         powerStatsRepository.updateStats(uuid, stats);
     }
 }
