@@ -5,6 +5,7 @@ import br.com.gubee.interview.core.features.powerstats.PowerStatsRepository;
 import br.com.gubee.interview.model.Hero;
 import br.com.gubee.interview.model.HeroComparison;
 import br.com.gubee.interview.model.PowerStats;
+import br.com.gubee.interview.model.dto.HeroDTO;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -31,21 +32,27 @@ public class HeroService {
     }
 
     @Transactional
-    public Hero findHeroById(UUID id) {
-        Hero result = heroRepository.findHeroById(id).orElseThrow(() -> new NotFoundException("Hero not found."));
-        return result;
+    public HeroDTO findHeroById(UUID id) {
+        HeroDTO hero = heroRepository.findHeroById(id).orElseThrow(() -> new NotFoundException("Hero not found."));
+        hero.setPowerStats(powerStatsRepository.findById(hero.getPowerStats().getId()).orElseThrow(()-> new NotFoundException("Hero not found.")));
+        return hero;
     }
 
     @Transactional
-    public List<Hero> findAllHeroes() {
-        List<Hero> result = heroRepository.findAllHeroes();
-        return result;
+    public List<HeroDTO> findAllHeroes() {
+        List<HeroDTO> heroes = heroRepository.findAllHeroes();
+        for(HeroDTO hero : heroes){
+            hero.setPowerStats(powerStatsRepository.findById(hero.getPowerStats().getId()).orElseThrow(()-> new NotFoundException("Hero not found.")));
+        }
+        return heroes;
     }
 
     @Transactional
-    public Hero findHeroByName(String name) {
-        Hero result = heroRepository.findHeroByName(name).orElse(null);
-        return result;
+    public HeroDTO findHeroByName(String name) {
+        HeroDTO hero = heroRepository.findHeroByName(name).orElse(null);
+        if(hero!=null)
+            hero.setPowerStats(powerStatsRepository.findById(hero.getPowerStats().getId()).orElseThrow(() -> new NotFoundException("Hero not found.")));
+        return hero;
     }
 
     @Transactional
@@ -56,10 +63,10 @@ public class HeroService {
 
     @Transactional
     public void updateHero(CreateHeroRequest heroRequest, UUID uuid) {
-        Hero hero = heroRepository.findHeroById(uuid).orElseThrow(() -> new NotFoundException("Hero not found."));
+        HeroDTO hero = heroRepository.findHeroById(uuid).orElseThrow(() -> new NotFoundException("Hero not found."));
         heroRepository.updateHero(heroRequest, uuid);
         powerStatsRepository.updateStats(
-                hero.getPowerStatsId(),
+                hero.getPowerStats().getId(),
                 new PowerStats(
                         heroRequest.getStrength(),
                         heroRequest.getAgility(),
@@ -68,11 +75,11 @@ public class HeroService {
     }
 
     public HeroComparison compareHeroes(UUID id1, UUID id2) {
-        Hero hero1 = heroRepository.findHeroById(id1).orElseThrow(() -> new NotFoundException("Hero not found."));
-        Hero hero2 = heroRepository.findHeroById(id2).orElseThrow(() -> new NotFoundException("Hero not found."));
+        HeroDTO hero1 = heroRepository.findHeroById(id1).orElseThrow(() -> new NotFoundException("Hero not found."));
+        HeroDTO hero2 = heroRepository.findHeroById(id2).orElseThrow(() -> new NotFoundException("Hero not found."));
 
-        PowerStats statsHero1 = powerStatsRepository.findById(hero1.getPowerStatsId()).orElseThrow(() -> new NotFoundException("Power Statistics not found."));
-        PowerStats statsHero2 = powerStatsRepository.findById(hero2.getPowerStatsId()).orElseThrow(() -> new NotFoundException("Power Statistics not found."));
+        PowerStats statsHero1 = powerStatsRepository.findById(hero1.getPowerStats().getId()).orElseThrow(() -> new NotFoundException("Power Statistics not found."));
+        PowerStats statsHero2 = powerStatsRepository.findById(hero2.getPowerStats().getId()).orElseThrow(() -> new NotFoundException("Power Statistics not found."));
 
         int strengthDifference = statsHero1.getStrength() - statsHero2.getStrength();
         int agilityDifference = statsHero1.getAgility() - statsHero2.getAgility();

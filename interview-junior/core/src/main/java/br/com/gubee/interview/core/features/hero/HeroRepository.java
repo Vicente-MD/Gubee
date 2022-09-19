@@ -1,6 +1,8 @@
 package br.com.gubee.interview.core.features.hero;
 
 import br.com.gubee.interview.model.Hero;
+import br.com.gubee.interview.model.PowerStats;
+import br.com.gubee.interview.model.dto.HeroDTO;
 import br.com.gubee.interview.model.enums.Race;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
 import lombok.RequiredArgsConstructor;
@@ -44,17 +46,17 @@ public class HeroRepository {
                 UUID.class);
     }
 
-    public Optional<Hero> findHeroById(UUID uuid) {
+    public Optional<HeroDTO> findHeroById(UUID uuid) {
         try {
             SqlParameterSource params = new MapSqlParameterSource("id", uuid);
-            Hero hero = namedParameterJdbcTemplate.queryForObject(
+            HeroDTO hero = namedParameterJdbcTemplate.queryForObject(
                     FIND_HERO_BY_ID_QUERY,
                     params,
-                    (rs, rows) -> Hero.builder()
+                    (rs, rows) -> HeroDTO.builder()
                             .id(UUID.fromString(rs.getString("id")))
                             .name(rs.getString("name"))
                             .race(Race.valueOf(rs.getString("race")))
-                            .powerStatsId(UUID.fromString(rs.getString("power_stats_id")))
+                            .powerStats(PowerStats.builder().id(UUID.fromString(rs.getString("power_stats_id"))).build())
                             .build());
             return Optional.of(hero);
         } catch (EmptyResultDataAccessException e) {
@@ -62,31 +64,31 @@ public class HeroRepository {
         }
     }
 
-    public List<Hero> findAllHeroes() {
+    public List<HeroDTO> findAllHeroes() {
         SqlParameterSource params = new MapSqlParameterSource();
-        List<Hero> result = namedParameterJdbcTemplate.query(
+        List<HeroDTO> result = namedParameterJdbcTemplate.query(
                 FIND_ALL_HEROES,
                 params,
-                (rs, rows) -> Hero.builder()
+                (rs, rows) -> HeroDTO.builder()
                         .id(UUID.fromString(rs.getString("id")))
                         .name(rs.getString("name"))
                         .race(Race.valueOf(rs.getString("race")))
-                        .powerStatsId(UUID.fromString(rs.getString("power_stats_id")))
+                        .powerStats(PowerStats.builder().id(UUID.fromString(rs.getString("power_stats_id"))).build())
                         .build());
         return result;
     }
 
-    public Optional<Hero> findHeroByName(String name) {
+    public Optional<HeroDTO> findHeroByName(String name) {
         try {
             SqlParameterSource params = new MapSqlParameterSource("name", name);
-            Hero hero = namedParameterJdbcTemplate.queryForObject(
+            HeroDTO hero = namedParameterJdbcTemplate.queryForObject(
                     FIND_HERO_BY_NAME,
                     params,
-                    (rs, rows) -> Hero.builder()
+                    (rs, rows) -> HeroDTO.builder()
                             .id(UUID.fromString(rs.getString("id")))
                             .name(rs.getString("name"))
                             .race(Race.valueOf(rs.getString("race")))
-                            .powerStatsId(UUID.fromString(rs.getString("power_stats_id")))
+                            .powerStats(PowerStats.builder().id(UUID.fromString(rs.getString("power_stats_id"))).build())
                             .build());
             return Optional.of(hero);
         } catch (EmptyResultDataAccessException e) {

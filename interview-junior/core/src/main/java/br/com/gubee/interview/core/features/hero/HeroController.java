@@ -2,6 +2,7 @@ package br.com.gubee.interview.core.features.hero;
 
 import br.com.gubee.interview.model.Hero;
 import br.com.gubee.interview.model.HeroComparison;
+import br.com.gubee.interview.model.dto.HeroDTO;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,24 +31,24 @@ public class HeroController {
     }
 
     @GetMapping("id/{id}")
-    public ResponseEntity<Hero> getHeroById(@PathVariable("id") UUID id) {
+    public ResponseEntity<HeroDTO> getHeroById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(heroService.findHeroById(id));
     }
 
     @GetMapping("getAll")
-    public List<Hero> getAllHeroes() {
+    public List<HeroDTO> getAllHeroes() {
         return heroService.findAllHeroes();
     }
 
     @GetMapping("name/{name}")
-    public ResponseEntity<Hero> findHeroByName(@PathVariable("name") String name) {
+    public ResponseEntity<HeroDTO> findHeroByName(@PathVariable("name") String name) {
         return ResponseEntity.ok(heroService.findHeroByName(name));
     }
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") UUID id) {
         heroService.deleteHeroById(id);
-        return ResponseEntity.ok().body("Hero deleted!!!");
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("update/{id}")
