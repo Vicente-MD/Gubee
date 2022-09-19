@@ -1,0 +1,59 @@
+<mat-card>
+
+    <mat-toolbar color="primary">Heróis</mat-toolbar>
+    <mat-table mat-table [dataSource]="heroes" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Nome</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="race">
+            <mat-header-cell *matHeaderCellDef>Raça</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.race }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="powerStatsId">
+            <mat-header-cell *matHeaderCellDef> Stats Id </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.power_stats.id }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="strength">
+            <mat-header-cell *matHeaderCellDef> Força </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.power_stats.strength }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="agility">
+            <mat-header-cell *matHeaderCellDef> Agilidade </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.power_stats.agility }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="dexterity">
+            <mat-header-cell *matHeaderCellDef> Destreza </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.power_stats.dexterity }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="intelligence">
+            <mat-header-cell *matHeaderCellDef> Inteligência </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.power_stats.intelligence }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef class="addBtn">
+                <button mat-flat-button color="primary" (click)="onAdd()">Adicionar</button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="btn">
+                <button mat-flat-button color="accent" (click)="onEdit(element)">Editar</button>
+                <button mat-flat-button color="warn" (click)="onDelete(element)">Deletar</button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</mat-card>
