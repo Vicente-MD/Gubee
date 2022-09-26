@@ -8,7 +8,7 @@ import model.Product;
 import java.lang.reflect.Proxy;
 
 public class DynamicProxyProduct implements Product {
-    private final Product product = FactoryProduct.getEnum(FactoryProductEnum.DEFAULT).instantiateProduct();
+    private final Product product = FactoryProduct.getEnum(FactoryProductEnum.DEFAULT).newProduct();
 
     private final Product proxyInstance = (Product) Proxy.newProxyInstance(
             Main.class.getClassLoader(),
@@ -17,8 +17,8 @@ public class DynamicProxyProduct implements Product {
     );
 
     @Override
-    public void create() {
-        proxyInstance.create();
+    public void create(String id, String name, double price) {
+        proxyInstance.create(id, name, price);
     }
 
 }

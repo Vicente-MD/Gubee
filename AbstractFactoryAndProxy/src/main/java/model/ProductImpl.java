@@ -9,7 +9,7 @@ public class ProductImpl implements Product {
 
     @Override
     @Transaction
-    public void create() {
+    public void create(String id, String name, double price) {
         System.out.println("Criando produto:\n\tId: " + id + "\n\tNome: " + name + "\n\tPrice: " + price);
     }
 

@@ -7,5 +7,5 @@ public interface FactoryProduct {
         return factoryProductEnum.getFactory();
     }
 
-    Product instantiateProduct();
+    Product newProduct();
 }

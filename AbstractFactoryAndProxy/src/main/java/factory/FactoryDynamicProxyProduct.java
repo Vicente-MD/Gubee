@@ -5,7 +5,7 @@ import proxy.DynamicProxyProduct;
 
 public class FactoryDynamicProxyProduct implements FactoryProduct {
     @Override
-    public Product instantiateProduct() {
+    public Product newProduct() {
         return new DynamicProxyProduct();
     }
 }

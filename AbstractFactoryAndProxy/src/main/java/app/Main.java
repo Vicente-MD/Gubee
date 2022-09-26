@@ -12,11 +12,10 @@ public class Main {
 
         List<Product> productList = new ArrayList<>();
 
-        productList.add(FactoryProduct.getEnum(FactoryProductEnum.PROXY_REFLECTION).instantiateProduct());
-        productList.get(0).create();
+        productList.add(FactoryProductEnum.getFactoryProduct());
+        productList.get(0).create("tttttt", "Moto Z Power", 3500.55);
 
-        productList.add(FactoryProduct.getEnum(FactoryProductEnum.PROXY_DYNAMIC).instantiateProduct());
-        productList.get(1).create();
-
+        productList.add(FactoryProductEnum.getFactoryProduct());
+        productList.get(1).create("yyyyyy", "Samsung Note 10", 3498.55);
     }
 }
