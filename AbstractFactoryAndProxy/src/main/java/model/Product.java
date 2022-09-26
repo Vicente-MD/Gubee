@@ -1,5 +1,8 @@
 package model;
 
+import annotation.Transaction;
+
 public interface Product {
-    public void create(String id, String name, double price);
+    @Transaction
+    public void create();
 }

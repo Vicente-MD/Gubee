@@ -1,28 +1,24 @@
 package proxy;
 
 import app.Main;
+import factory.FactoryProduct;
+import factory.FactoryProductEnum;
 import model.Product;
-import model.ProductImpl;
 
 import java.lang.reflect.Proxy;
 
 public class DynamicProxyProduct implements Product {
-    private final Product product;
+    private final Product product = FactoryProduct.getEnum(FactoryProductEnum.DEFAULT).instantiateProduct();
+
+    private final Product proxyInstance = (Product) Proxy.newProxyInstance(
+            Main.class.getClassLoader(),
+            new Class[]{Product.class},
+            new ProductInvocationHandler(product)
+    );
 
     @Override
-    public void create(String id, String name, double price) {
-        getProxyInstance().create(id, name, price);
+    public void create() {
+        proxyInstance.create();
     }
 
-    public DynamicProxyProduct() {
-        this.product = new ProductImpl();
-    }
-
-    private Product getProxyInstance() {
-        return (Product) Proxy.newProxyInstance(
-                Main.class.getClassLoader(),
-                new Class[]{Product.class},
-                new ProductInvocationHandler(product)
-        );
-    }
 }
