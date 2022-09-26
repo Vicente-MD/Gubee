@@ -1,21 +1,19 @@
 package factory;
 
-import model.Product;
-
 public enum FactoryProductEnum {
+
     PROXY_REFLECTION(new FactoryProxyProduct()),
     PROXY_DYNAMIC(new FactoryDynamicProxyProduct()),
     DEFAULT(new FactoryProductDefault());
 
+    public static FactoryProduct getFactoryProduct() {
+        return FactoryProductEnum.PROXY_DYNAMIC.getFactory();
+    }
 
     private final FactoryProduct factoryProduct;
 
     public FactoryProduct getFactory() {
         return factoryProduct;
-    }
-
-    public static Product getFactoryProduct(){
-        return FactoryProductEnum.PROXY_DYNAMIC.getFactory().newProduct();
     }
 
     FactoryProductEnum(FactoryProduct factoryProduct) {
