@@ -15,9 +15,4 @@ public class ProductImpl implements Product {
 
     public ProductImpl() { }
 
-    public ProductImpl(String id, String name, double price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
 }

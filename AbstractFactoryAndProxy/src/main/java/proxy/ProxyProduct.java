@@ -8,7 +8,7 @@ import model.Product;
 import java.lang.reflect.Method;
 
 public class ProxyProduct implements Product {
-    private Product product = FactoryProduct.getEnum(FactoryProductEnum.DEFAULT).newProduct();
+    private Product product;
     @Override
     public void create(String id, String name, double price) {
         try {
@@ -21,5 +21,9 @@ public class ProxyProduct implements Product {
         } catch (NoSuchMethodException e) {
             System.out.println("Finalizando execução com erro.");
         }
+    }
+
+    public ProxyProduct(Product p){
+        this.product = p;
     }
 }
