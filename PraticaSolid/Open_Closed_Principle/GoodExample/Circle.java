@@ -1,6 +1,6 @@
 package Open_Closed_Principle.GoodExample;
 
-public class Circle extends Shape {
+public class Circle implements Shape {
     private double radius;
     private static double pi = 3.1415;
 
@@ -19,7 +19,7 @@ public class Circle extends Shape {
         this.radius = radius;
     }
 
-    public double Area(){
+    public double area(){
         return this.radius * this.radius * pi;
     }
 }

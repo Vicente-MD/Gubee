@@ -1,5 +1,6 @@
+package Single_Responsability_Principle.GoodExample;
 public class TaxCalculator {
-    static public double calculateTax(double taxRate, double price) {
+    public double calculateTax(double taxRate, double price) {
         return price * taxRate;
     }
 }

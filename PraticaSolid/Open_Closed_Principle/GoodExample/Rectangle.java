@@ -1,6 +1,6 @@
 package Open_Closed_Principle.GoodExample;
 
-public class Rectangle extends Shape{
+public class Rectangle implements Shape{
     private double width;
     private double height;
 
@@ -21,7 +21,7 @@ public class Rectangle extends Shape{
         this.height = height;
     }
 
-    public double Area(){
+    public double area(){
         return this.width * this.height;
     }
 }

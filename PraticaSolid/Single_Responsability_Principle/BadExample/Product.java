@@ -18,6 +18,10 @@ public class Product {
         return this.price * this.taxRate;
     }
 
+    public String displayProduct(){
+        return "Product: " + this.name + ", price (no tax): " + this.price;
+    }
+
     public String getId() {
         return id;
     }

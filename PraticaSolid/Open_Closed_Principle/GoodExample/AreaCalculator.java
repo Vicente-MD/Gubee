@@ -1,10 +1,10 @@
 package Open_Closed_Principle.GoodExample;
 
 public class AreaCalculator {
-    public double Area(Shape[] shapes) {
+    public double area(Shape[] shapes) {
         double area = 0;
         for (var shape : shapes) {
-            area += shape.Area();
+            area += shape.area();
         }
         return area;
     }

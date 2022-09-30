@@ -1,3 +1,5 @@
+package Single_Responsability_Principle.GoodExample;
+
 // Class has only one responsability
 public class Product {
     private String id;
