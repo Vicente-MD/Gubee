@@ -30,7 +30,7 @@ public class HeroController {
         return created(URI.create(format("/api/v1/heroes/%s", id))).build();
     }
 
-    @GetMapping("id/{id}")
+    @GetMapping(value = "id/{id}")
     public ResponseEntity<HeroDTO> getHeroById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(heroService.findHeroById(id));
     }
