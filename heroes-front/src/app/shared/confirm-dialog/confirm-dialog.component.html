@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Deletar herói?</h1>
+<div mat-dialog-content>
+  Deseja deletar '{{ data.name | uppercase }}'?
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="cancel()">Não</button>
+  <button mat-button mat-dialog-close [mat-dialog-close]="data.id" cdkFocusInitial>Sim</button>
+</div>

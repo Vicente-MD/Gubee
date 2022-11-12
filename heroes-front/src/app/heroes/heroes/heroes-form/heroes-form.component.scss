@@ -1,0 +1,22 @@
+mat-card,
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    min-width: 700px;
+    max-width: 900px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    form {
+        min-width: 200px;
+    }
+}

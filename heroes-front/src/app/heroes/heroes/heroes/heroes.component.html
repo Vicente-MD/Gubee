@@ -1,0 +1,7 @@
+<mat-card>
+  <div class="example-container mat-elevation-z8">
+    <app-heroes-list *ngIf="heroes$ | async as heroes;" 
+    [heroes]="heroes" (add)="onAdd()" (edit)="onEdit($event)"
+      (remove)="openDialog($event)"></app-heroes-list>
+  </div>
+</mat-card>

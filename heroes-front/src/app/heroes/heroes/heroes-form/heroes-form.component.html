@@ -1,0 +1,51 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Adicionando herói</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="form">
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Nome do herói" formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Raça</mat-label>
+                <mat-select formControlName="race">
+                    <mat-option value="null"></mat-option>
+                    <mat-option value="HUMAN">Humano</mat-option>
+                    <mat-option value="DIVINE">Divino</mat-option>
+                    <mat-option value="ALIEN">Alienígena</mat-option>
+                    <mat-option value="CYBORG">Ciborgue</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Força</mat-label>
+                <input matInput type="number" name="strength" min="0" max="10" formControlName="strength">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Agilidade</mat-label>
+                <input matInput type="number" name="agility" min="0" max="10" formControlName="agility">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Destreza</mat-label>
+                <input matInput type="number" name="dexterity" min="0" max="10" formControlName="dexterity">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Inteligência</mat-label>
+                <input matInput type="number" name="intelligence" min="0" max="10" formControlName="intelligence">
+            </mat-form-field>
+
+        </form>
+    </mat-card-content>
+
+    <mat-card-actions class="btn">
+        <button mat-flat-button color="primary" (click)="onSubmit()">Adicionar</button>
+        <button mat-button (click)="onCancel()">Cancelar</button>
+    </mat-card-actions>
+
+</mat-card>
